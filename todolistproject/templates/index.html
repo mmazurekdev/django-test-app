@@ -1,0 +1,58 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="todolist not-done">
+                <h1>Add new Todo</h1>
+
+                <form class="form-inline" method="post">
+                    <input type="text" class="form-control" name="description">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-primary my-1">Add</button>
+                </form>
+                </form>
+                <hr>
+                <h1>Todos</h1>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Mark as done</th>
+                        <th scope="col">Finished at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for todo in todos %}
+                    <tr>
+                        <td>{{ todo.description }}</td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="id" value="{{ todo.id }}">
+                                {% csrf_token %}
+                                {% if todo.done_at %}
+                                <button class="btn btn-sm btn-disabled" disabled><i class="glyphicon glyphicon-ok
+"></i></button>
+                                {% else %}
+
+                                <button class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-ok
+"></i></button>
+                                {% endif %}
+                            </form>
+                        </td>
+                        <td>{{ todo.done_at }}</td>
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+            </div>
+        </div>
+    </div>
+</div>
